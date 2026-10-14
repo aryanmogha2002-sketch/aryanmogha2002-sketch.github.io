@@ -257,7 +257,7 @@
             <li data-pass="4">Phone number</li>
             <li data-pass="5">Street address</li>
           </ol>
-          <p class="tally"><strong>707 of 735</strong>members matched this way in my nurse-line project</p>
+          <p class="tally"><strong>5 passes</strong>strictest rules first, so every match stays one-to-one</p>
         </div>
       </div>
     </div>
@@ -269,30 +269,6 @@
     <section id="projects" aria-labelledby="projects-h">
       <h2 class="section-title" id="projects-h">Projects</h2>
       <p class="section-sub">Real numbers from real work. Each one links to the code and a full write-up on GitHub.</p>
-
-      <article class="project">
-        <div>
-          <p class="course">CIS 450, Fall 2026</p>
-          <h3>Nurse line cost-savings analysis</h3>
-          <p class="desc">A health plan wanted to know if its nurse advice line saved money. The call system and the claims system share no member ID, so I linked them with regex cleaning and the matching passes above, grouped claims into conditions and treatments in SQL, and priced every change in treatment plan.</p>
-          <div class="stat"><b>$12.85M</b><span>estimated savings from 481 calls where members chose a less intensive treatment</span></div>
-          <ul class="tools"><li>Python</li><li>Jupyter</li><li>Pandas</li><li>SQL Server</li><li>MySQL</li><li>SQLAlchemy</li><li>Regex</li></ul>
-          <a class="code-link" href="https://github.com/aryanmogha2002-sketch/nurse-line-cost-savings">See the code and write-up</a>
-        </div>
-        <figure class="viz">
-          <svg viewBox="0 0 400 256" role="img" aria-labelledby="nl-t">
-            <title id="nl-t">Treatment plan before and after 847 nurse calls. Of 544 members planning surgery, 360 chose physical therapy, medication or self-care instead.</title>
-            <g font-size="11.5" fill="#46574F" text-anchor="middle">
-              <text x="146" y="14">Surgery</text><text x="218" y="14">Therapy</text><text x="290" y="14">Medication</text><text x="362" y="14">Self-care</text>
-            </g>
-            <g font-size="11.5" fill="#46574F" text-anchor="end">
-              <text x="104" y="55">Surgery</text><text x="104" y="113">Therapy</text><text x="104" y="171">Medication</text><text x="104" y="229">Self-care</text>
-            </g>
-            <g id="heat" class="cells" transform="translate(112,24)"></g>
-          </svg>
-          <figcaption>847 calls. Rows are the plan before the call, columns the plan after. Green cells moved to a cheaper treatment.</figcaption>
-        </figure>
-      </article>
 
       <article class="project">
         <div>
@@ -483,16 +459,6 @@
   function el(tag,attrs,text){var e=document.createElementNS(SVGNS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e;}
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* nurse-line heatmap: real call counts from the project */
-  var m=[[184,123,115,122],[13,49,31,33],[3,4,43,57],[2,5,1,62]], heat=document.getElementById('heat');
-  m.forEach(function(r,i){r.forEach(function(v,j){
-    var t=v/184, down=j>i, op=down?(0.2+0.8*t):(0.07+0.5*t);
-    var c=el('g',{class:'c',style:'transition-delay:'+((i*4+j)*45)+'ms'});
-    c.appendChild(el('rect',{x:j*72,y:i*58,width:68,height:54,rx:4,fill:down?'rgba(31,122,90,'+op+')':'rgba(19,38,31,'+op+')'}));
-    c.appendChild(el('text',{x:j*72+34,y:i*58+33,'text-anchor':'middle','font-size':15,'font-weight':700,fill:op>0.5?'#fff':'#13261F'},v));
-    heat.appendChild(c);
-  });});
-
   /* flight delay bars: real rates from the project */
   var d=[['6–10am',14.3],['10am–2pm',12.8],['2–6pm',24.2],['6pm+',24.4]], g=document.getElementById('bars'), H=164, max=30, top=14;
   [0,10,20,30].forEach(function(v){var y=top+H-v/max*H;g.appendChild(el('line',{x1:34,x2:400,y1:y,y2:y,stroke:'#C3CEC6','stroke-width':1}));g.appendChild(el('text',{x:0,y:y+4,'font-size':11.5,fill:'#46574F'},v+'%'));});
@@ -513,15 +479,15 @@
   /* record matcher: made-up example records */
   var pairs=[
     {pass:1,keys:[0,1],
-     a:['Nurse-call system','Robert "Bob" Diaz Jr.','3/14/87','85281-2204','(480) 555-0137'],
+     a:['Call center system','Robert "Bob" Diaz Jr.','3/14/87','85281-2204','(480) 555-0137'],
      b:['Claims system','DIAZ, ROBERT','1987-03-14','85281',''],
      ca:['robert diaz','1987-03-14','85281','4805550137'], cb:['robert diaz','1987-03-14','85281','']},
     {pass:3,keys:[0,1,2],
-     a:['Nurse-call system','Kathy Nguyen-Lee','07/02/1990','85004',''],
+     a:['Call center system','Kathy Nguyen-Lee','07/02/1990','85004',''],
      b:['Claims system','Katherine Nguyen','1990-07-02','85004-1129','602 555 0182'],
      ca:['k. nguyenlee','1990-07-02','85004',''], cb:['k. nguyen','1990-07-02','85004','6025550182']},
     {pass:4,keys:[3],
-     a:['Nurse-call system','M. Okafor','','85257','602.555.0148'],
+     a:['Call center system','M. Okafor','','85257','602.555.0148'],
      b:['Claims system','Michael Okafor','1979-11-30','85251','+1 (602) 555-0148'],
      ca:['m okafor','','85257','6025550148'], cb:['michael okafor','1979-11-30','85251','6025550148']}
   ];
